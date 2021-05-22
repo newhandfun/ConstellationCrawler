@@ -1,9 +1,13 @@
 {
+    "Login":"登入",
     "Register":"註冊",
     "Manually Register":"手動註冊",
     "Third-Party Register":"透過第三方註冊",
     "Name":"暱稱",
+    "Account":"帳號",
     "E-Mail Address":"電子郵件地址",
     "Password":"密碼",
-    "Confirm Password":"確認密碼"
+    "Confirm Password":"確認密碼",
+    "Dashboard":"儀錶板",
+    "You are logged in!":"已登入"
 }
