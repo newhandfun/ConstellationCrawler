@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(ConstellationCrawler::class)
-            ->dailyAt('02:00');
+            ->hourly();
     }
 
     /**
