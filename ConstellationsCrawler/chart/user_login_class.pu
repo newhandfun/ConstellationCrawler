@@ -1,0 +1,34 @@
+@startuml
+interface UserLoginService{
+    execute()
+}
+class SimpleUserLoginService{
+    execute()
+}
+UserLoginService -- SimpleUserLoginService
+
+interface UserRegisterService{
+    execute()
+}
+class SimpleUserRegisterService{
+    execute()
+}
+UserRegisterService ^-- SimpleUserRegisterService
+UserRegisterService -- UserLoginRepository
+
+interface UserLoginRepository{
+    userExists()
+    matchUserData()
+    userLogin()
+}
+interface UserRegisterRepository{
+    userRegister()
+}
+class EloquentUserRepository{
+    userExists()
+    matchUserData()
+    userRegister()
+}
+UserLoginRepository ^-- EloquentUserRepository
+UserRegisterRepository ^-- EloquentUserRepository
+@enduml

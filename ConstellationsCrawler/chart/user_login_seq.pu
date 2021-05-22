@@ -1,0 +1,42 @@
+@startuml
+->AuthController:userLogin()
+AuthController->UserLoginService:execute()
+UserLoginService->UserLoginRepository:validateLoginData()
+note left of UserLoginRepository : 先進行輸入欄位的驗證
+=== 輸入資料格式錯誤 ==
+UserLoginRepository->UserLoginService:false
+UserLoginService->AuthController:false
+<-AuthController:fail
+=== 檢查輸入格式正確 ==
+UserLoginRepository->UserLoginService:true
+note left of UserLoginService : UserLoginService會嘗試透過資料登入。\n沒有的資料時回傳false\n有符合使用者則直接登入後回傳ture
+UserLoginService->UserLoginRepository:doesUserExists()
+=== 使用者不存在 ==
+UserLoginRepository->UserLoginService:false
+UserLoginService->AuthController:false
+AuthController->UserRegisterService:execute()
+UserRegisterService->AuthController
+AuthController->UserLoginService:execute()
+UserLoginRepository->UserLoginService:true
+UserLoginService->UserLoginRepository:matchUserData()
+UserLoginRepository->UserLoginService:true
+UserLoginService->UserLoginRepository:userLogin()
+UserLoginRepository->UserLoginService:$user
+UserLoginService->AuthController:$user
+<-AuthController:success
+=== 使用者存在但資料錯誤 ==
+UserLoginRepository->UserLoginService:true
+UserLoginService->UserLoginRepository:matchUserData()
+note left of UserLoginRepository : 配對實際使用者資料是否與輸入相同
+UserLoginRepository->UserLoginService:false
+UserLoginService->AuthController:false
+<-AuthController:fail
+=== 使用者存在且資料正確 ==
+UserLoginRepository->UserLoginService:true
+UserLoginService->UserLoginRepository:matchUserData()
+UserLoginRepository->UserLoginService:true
+UserLoginService->UserLoginRepository:userLogin()
+UserLoginRepository->UserLoginService:$user
+UserLoginService->AuthController:$user
+<-AuthController:success
+@enduml
